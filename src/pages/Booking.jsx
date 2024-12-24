@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import "../styles/Booking.css";
 
-const BASE_URL = "http://localhost:2211/api";
+const BASE_URL = "http://localhost:2212/api";
 
 function Booking() {
   const navigate = useNavigate();
@@ -107,7 +107,10 @@ function Booking() {
                         (court === 'Sân số 2' && slot.field_id === 2);
       const timeMatch = slot.start_time === time;
       
-      return slotDate === checkDate && courtMatch && timeMatch;
+      // Kiểm tra slot đã đặt và chưa bị hủy
+      const isActive = slot.status === 'pending' || slot.status === 'confirmed';
+      
+      return slotDate === checkDate && courtMatch && timeMatch && isActive;
     });
   };
 
@@ -287,30 +290,31 @@ function Booking() {
                     const formattedDay = day.toISOString().split("T")[0];
                     return (
                       <td
-                        key={`${time}-${formattedDay}-${court}`}
-                        className={
-                          isBooked(time, formattedDay, court)
-                            ? "booked"
-                            : isPastSlot(time, formattedDay)
-                            ? "past"
-                            : selectedSlots.some(
-                                (slot) =>
-                                  slot.time === time &&
-                                  slot.day === formattedDay &&
-                                  slot.court === court
-                              )
-                            ? "selected"
-                            : "available"
-                        }
-                        onClick={() =>
-                          handleSlotClick(time, formattedDay, court)
-                        }
-                      >
-                        {!isPastSlot(time, formattedDay) &&
-                        !isBooked(time, formattedDay, court)
-                          ? `${prices[time].toLocaleString()} đ`
-                          : ""}
-                      </td>
+    key={`${time}-${formattedDay}-${court}`}
+    className={
+      isBooked(time, formattedDay, court)
+        ? "booked"  // CSS class cho ô đã đặt
+        : isPastSlot(time, formattedDay)
+        ? "past"
+        : selectedSlots.some(
+            (slot) =>
+              slot.time === time &&
+              slot.day === formattedDay &&
+              slot.court === court
+          )
+        ? "selected"
+        : "available"
+    }
+    onClick={() =>
+      handleSlotClick(time, formattedDay, court)
+    }
+  >
+    {isBooked(time, formattedDay, court)
+      ? "Đã đặt"  // Hiển thị text cho ô đã đặt
+      : !isPastSlot(time, formattedDay)
+      ? `${prices[time].toLocaleString()} đ`
+      : ""}
+  </td>
                     );
                   })}
                 </tr>

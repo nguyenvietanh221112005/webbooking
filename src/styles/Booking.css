@@ -201,5 +201,45 @@
   .booking-table td.booked:hover {
     background-color: #ff0000 !important;
   }
+
+  .booking-table td.booked {
+    background-color: #ff0000 !important;
+    color: white !important;
+    cursor: not-allowed !important;
+    pointer-events: none;
+    opacity: 1 !important;
+  }
+  
+  .booking-table td.booked:hover {
+    background-color: #ff0000 !important;
+  }
+  
+  /* Thêm style cho trạng thái đã đặt */
+  .booked {
+    background-color: #ff0000 !important;
+    cursor: not-allowed !important;
+    color: white !important;
+  }
+  
+  
+
+/* Style chung cho trạng thái đã đặt */
+.booked {
+  background-color: #ff0000 !important;
+  cursor: not-allowed !important;
+  color: white !important;
+}
+
+.booked:hover {
+  background-color: #ff0000 !important;
+}
+
+/* Đảm bảo text "Đã đặt" hiển thị rõ ràng */
+.booking-table td.booked {
+  font-size: 14px;
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
   
   

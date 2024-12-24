@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "../styles/Booking.css";
 import '../styles/Navbar.css';
 
-const BASE_URL = "http://localhost:2211/api";
+const BASE_URL = "http://localhost:2212/api";
 
 function BookingLogin() {
   const navigate = useNavigate();
